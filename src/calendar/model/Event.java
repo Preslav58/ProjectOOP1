@@ -54,6 +54,14 @@ public class Event {
         }
     }
 
+    public boolean оverlap(Event otherEvent) {
+        if (!this.date.equals(otherEvent.date)) {
+            return false;
+        }
+        return this.startTime.isBefore(otherEvent.endTime) &&
+                this.endTime.isAfter(otherEvent.startTime);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Event event)) return false;
