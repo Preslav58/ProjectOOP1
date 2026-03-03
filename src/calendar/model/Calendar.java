@@ -45,6 +45,10 @@ public class Calendar {
         return Collections.unmodifiableList(events);
     }
 
+    public Set<LocalDate> getHolidays() {
+        return Collections.unmodifiableSet(holidays);
+    }
+
     public List<Event> getEventsForDate(LocalDate date) {
         List<Event> dailyEvents = new ArrayList<>();
         for (Event E : events) {
