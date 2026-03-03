@@ -54,7 +54,7 @@ public class Event {
         }
     }
 
-    public boolean оverlap(Event otherEvent) {
+    public boolean overlap(Event otherEvent) {
         if (!this.date.equals(otherEvent.date)) {
             return false;
         }
