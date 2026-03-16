@@ -18,7 +18,7 @@ public class TextStorage implements fileManeger {
                 String notes = event.getNotes().isEmpty() ? "" : event.getNotes();
 
                 String line = String.join(DELIMITER_CHAR, "EVENT",
-                        event.getName().toString(),
+                        event.getDate().toString(),
                         event.getStartTime().toString(),
                         event.getEndTime().toString(),
                         event.getName(), notes);

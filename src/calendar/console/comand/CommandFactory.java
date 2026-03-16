@@ -4,6 +4,7 @@ import calendar.console.comand.basicComands.Close;
 import calendar.console.comand.basicComands.Open;
 import calendar.console.comand.basicComands.Save;
 import calendar.console.comand.basicComands.SaveAs;
+import calendar.console.comand.complexCommands.Book;
 
 public class CommandFactory {
     public static Command getCommand(String command) {
@@ -12,6 +13,7 @@ public class CommandFactory {
             case "close": return new Close();
             case "save": return new Save();
             case "save as": return new SaveAs();
+            case "book": return new Book();
 
             default : throw new IllegalArgumentException("Invalid command. Type 'help' for help.");
         }
