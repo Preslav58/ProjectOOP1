@@ -49,6 +49,15 @@ public class Calendar {
         return Collections.unmodifiableSet(holidays);
     }
 
+    public Event getEvent(LocalDate date, LocalTime startTime) {
+        for (Event event : events) {
+            if (event.getDate().equals(date) && event.getStartTime().equals(startTime)) {
+                return event;
+            }
+        }
+        return null;
+    }
+
     public List<Event> getEventsForDate(LocalDate date) {
         List<Event> dailyEvents = new ArrayList<>();
         for (Event E : events) {

@@ -7,15 +7,11 @@ public class Save implements Command {
 
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (!context.isFileOpen()){
-            throw new IllegalStateException("Error. No file for saving");
-        }
-
         String file = context.getFileName();
 
         context.getTextStorage().save(context.getCurentCalendar(), file);
         context.setHasUnsavedChanges(false);
 
-        return "Successfully saved" + file;
+        return "Successfully saved " + file;
     }
 }

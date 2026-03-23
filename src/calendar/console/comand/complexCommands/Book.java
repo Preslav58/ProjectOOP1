@@ -11,9 +11,6 @@ public class Book implements Command {
 
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (!context.isFileOpen()) {
-            throw new IllegalStateException("Error. No such file or directory.");
-        }
         if (args.length < 4) {
             throw new IllegalArgumentException("Error. Too few arguments.");
         }

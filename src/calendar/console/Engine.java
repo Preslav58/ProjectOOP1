@@ -46,8 +46,13 @@ public class Engine {
 
                 Command command = CommandFactory.getCommand(commandName);
 
+                if (command.requiresOpenedFile() && !context.isFileOpen()) {
+                    throw new IllegalStateException("No file is currently open.");
+                }
+
                 String result = command.execute(args, context);
                 System.out.println(result);
+
             } catch (Exception e) {
                 System.out.println("Invalid command: " + e.getMessage());
             }

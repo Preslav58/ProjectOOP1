@@ -1,10 +1,7 @@
 package calendar.console.comand;
 
-import calendar.console.comand.basicComands.Close;
-import calendar.console.comand.basicComands.Open;
-import calendar.console.comand.basicComands.Save;
-import calendar.console.comand.basicComands.SaveAs;
-import calendar.console.comand.complexCommands.Book;
+import calendar.console.comand.basicComands.*;
+import calendar.console.comand.complexCommands.*;
 
 public class CommandFactory {
     public static Command getCommand(String command) {
@@ -14,6 +11,12 @@ public class CommandFactory {
             case "save": return new Save();
             case "save as": return new SaveAs();
             case "book": return new Book();
+            case "unbook" : return new UnBook();
+            case "agenda": return new Agenda();
+            case "change": return new Change();
+            case "find": return new Find();
+            case "holiday": return new Holiday();
+            case "busydays": return new BusyDays();
 
             default : throw new IllegalArgumentException("Invalid command. Type 'help' for help.");
         }

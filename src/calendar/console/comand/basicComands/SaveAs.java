@@ -7,9 +7,6 @@ public class SaveAs implements Command {
 
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (!context.isFileOpen()) {
-            throw new IllegalStateException("Error. No file for saving");
-        }
         if (args.length < 1) {
             throw new IllegalArgumentException("Error. No name for saving");
         }
@@ -20,6 +17,6 @@ public class SaveAs implements Command {
         context.setFileName(newFile);
         context.setHasUnsavedChanges(false);
 
-        return "Successfully saved" + newFile;
+        return "Successfully saved " + newFile;
     }
 }

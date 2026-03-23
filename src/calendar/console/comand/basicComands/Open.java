@@ -20,4 +20,9 @@ public class Open implements Command {
 
         return "Successfully opened " + file;
     }
+
+    @Override
+    public boolean requiresOpenedFile() {
+        return false;
+    }
 }
