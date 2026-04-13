@@ -2,6 +2,7 @@ package calendar.console.comand.complexCommands;
 
 import calendar.console.Context;
 import calendar.console.comand.Command;
+import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Event;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public class Agenda implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 1) {
-            throw new IllegalArgumentException("Error. Please use agenda <date>");
+            throw new InvalidCommandArgumentsException("Error. Please use agenda <date>");
         }
 
         LocalDate date = LocalDate.parse(args[0]);

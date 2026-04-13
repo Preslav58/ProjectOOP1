@@ -2,6 +2,7 @@ package calendar.console.comand.complexCommands;
 
 import calendar.console.Context;
 import calendar.console.comand.Command;
+import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Event;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public class Book implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 4) {
-            throw new IllegalArgumentException("Error. Too few arguments.");
+            throw new InvalidCommandArgumentsException("Error. Too few arguments.");
         }
 
         LocalDate date = LocalDate.parse(args[0]);

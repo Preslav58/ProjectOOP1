@@ -1,4 +1,4 @@
-package calendar.filemaneger;
+package calendar.fileManeger;
 
 import calendar.model.Calendar;
 import calendar.model.Event;
@@ -7,7 +7,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class TextStorage implements fileManeger {
+public class TextStorage implements FileManeger {
     private static final String DELIMITER = "\\|";
     private static final String DELIMITER_CHAR = "|";
 

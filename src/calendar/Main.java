@@ -2,7 +2,7 @@ package calendar;
 
 import calendar.console.Context;
 import calendar.console.Engine;
-import calendar.filemaneger.TextStorage;
+import calendar.fileManeger.TextStorage;
 
 
 public class Main {

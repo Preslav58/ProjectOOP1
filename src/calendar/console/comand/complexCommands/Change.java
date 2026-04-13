@@ -2,6 +2,7 @@ package calendar.console.comand.complexCommands;
 
 import calendar.console.Context;
 import calendar.console.comand.Command;
+import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Event;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public class Change implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 4) {
-            throw new IllegalArgumentException("Error. Use change <date> <starttime> <option> <newvalue>");
+            throw new InvalidCommandArgumentsException("Error. Use change <date> <starttime> <option> <newvalue>");
         }
 
         LocalDate targetDate = LocalDate.parse(args[0]);
@@ -43,7 +44,7 @@ public class Change implements Command {
             case "name" : newName = newValue; break;
             case "note" : newNote = newValue; break;
 
-            default : throw new IllegalArgumentException("Error. Invalid option." + option + "Choose from : date, starttime, endtime, name, note.");
+            default : throw new InvalidCommandArgumentsException("Error. Invalid option." + option + "Choose from : date, starttime, endtime, name, note.");
         }
 
         context.getCurentCalendar().deleteEvent(oldEvent.getDate(), oldEvent.getStartTime(), oldEvent.getEndTime());

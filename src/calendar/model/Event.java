@@ -1,5 +1,7 @@
 package calendar.model;
 
+import calendar.exception.InvalidEventTimeException;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -49,7 +51,7 @@ public class Event {
     private void validateTimes() {
         if (startTime != null && endTime != null) {
             if (!endTime.isAfter(startTime)) {
-                throw new IllegalArgumentException("End time must be after start time");
+                throw new InvalidEventTimeException("Error. End time must be after start time");
             }
         }
     }

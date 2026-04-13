@@ -2,6 +2,7 @@ package calendar.console.comand.complexCommands;
 
 import calendar.console.Context;
 import calendar.console.comand.Command;
+import calendar.exception.InvalidCommandArgumentsException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,7 +12,7 @@ public class UnBook implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length != 3) {
-            throw new IllegalArgumentException("Error. Wrong number of arguments");
+            throw new InvalidCommandArgumentsException("Error. Wrong number of arguments");
         }
 
         LocalDate date = LocalDate.parse(args[0]);

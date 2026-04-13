@@ -2,6 +2,7 @@ package calendar.console.comand.complexCommands;
 
 import calendar.console.Context;
 import calendar.console.comand.Command;
+import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Event;
 
 public class Find implements Command {
@@ -9,7 +10,7 @@ public class Find implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 1) {
-            throw new Exception("Error. Not enough arguments");
+            throw new InvalidCommandArgumentsException("Error. Not enough arguments");
         }
 
         String keyword = String.join(" ", args).toLowerCase();

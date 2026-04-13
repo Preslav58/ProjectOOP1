@@ -2,23 +2,30 @@ package calendar.console.comand;
 
 import calendar.console.comand.basicComands.*;
 import calendar.console.comand.complexCommands.*;
+import calendar.console.comand.complexCommands.findCommands.FindSlot;
+import calendar.console.comand.complexCommands.findCommands.FindSlotWith;
+import calendar.exception.InvalidCommandArgumentsException;
 
 public class CommandFactory {
     public static Command getCommand(String command) {
-        switch (command.toLowerCase()) {
-            case "open": return new Open();
-            case "close": return new Close();
-            case "save": return new Save();
-            case "save as": return new SaveAs();
-            case "book": return new Book();
-            case "unbook" : return new UnBook();
-            case "agenda": return new Agenda();
-            case "change": return new Change();
-            case "find": return new Find();
-            case "holiday": return new Holiday();
-            case "busydays": return new BusyDays();
+        return switch (command.toLowerCase()) {
+            case "help" -> new Help();
+            case "open" -> new Open();
+            case "close" -> new Close();
+            case "save" -> new Save();
+            case "save as" -> new SaveAs();
+            case "book" -> new Book();
+            case "unbook" -> new UnBook();
+            case "agenda" -> new Agenda();
+            case "change" -> new Change();
+            case "find" -> new Find();
+            case "holiday" -> new Holiday();
+            case "busydays" -> new BusyDays();
+            case "findslot" -> new FindSlot();
+            case "findslotwith" -> new FindSlotWith();
+            case "merge" -> new Merge();
 
-            default : throw new IllegalArgumentException("Invalid command. Type 'help' for help.");
-        }
+            default -> throw new InvalidCommandArgumentsException("Invalid command. Type 'help' for help.");
+        };
     }
 }

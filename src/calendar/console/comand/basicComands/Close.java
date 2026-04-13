@@ -9,7 +9,7 @@ public class Close implements Command {
     public String execute(String[] args, Context context) throws Exception {
         String file = context.getFileName();
 
-        context.setCurentCalendar(null);
+        context.setCurrentCalendar(null);
         context.setFileName(null);
         context.setHasUnsavedChanges(false);
 

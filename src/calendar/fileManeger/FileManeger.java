@@ -1,10 +1,8 @@
-package calendar.filemaneger;
+package calendar.fileManeger;
 
 import calendar.model.Calendar;
 
-import java.io.IOException;
-
-public interface fileManeger {
+public interface FileManeger {
     Calendar load(String fileName) throws Exception;
     void save(Calendar calendar, String fileName) throws Exception;
 }

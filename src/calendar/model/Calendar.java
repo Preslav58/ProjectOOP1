@@ -1,5 +1,7 @@
 package calendar.model;
 
+import calendar.exception.EventConflictException;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -14,9 +16,9 @@ public class Calendar {
     }
 
     public void addEvent(Event nEvent) {
-        for (Event eEvent : events) {
-            if (eEvent.overlap(nEvent)) {
-                throw new IllegalArgumentException("Event overlaps with existing Event" +  eEvent.getName());
+        for (Event existingEvent : events) {
+            if (existingEvent.overlap(nEvent)) {
+                throw new EventConflictException("Event overlaps with existing Event" +  existingEvent.getName());
             }
         }
         events.add(nEvent);

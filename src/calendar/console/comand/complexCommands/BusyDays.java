@@ -2,6 +2,8 @@ package calendar.console.comand.complexCommands;
 
 import calendar.console.Context;
 import calendar.console.comand.Command;
+import calendar.exception.CalendarException;
+import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Event;
 
 import java.time.LocalDate;
@@ -16,14 +18,14 @@ public class BusyDays implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 2) {
-            throw new IllegalArgumentException("Error. Not enough arguments. Please use busydays <from> <to>");
+            throw new InvalidCommandArgumentsException("Error. Not enough arguments. Please use busydays <from> <to>");
         }
 
         LocalDate from = LocalDate.parse(args[0]);
         LocalDate to = LocalDate.parse(args[1]);
 
         if (to.isBefore(from)) {
-            throw new IllegalArgumentException("Error. To date can't be before from date.");
+            throw new CalendarException("Error. To date can't be before from date.");
         }
 
         Map<LocalDate, Long> dailyBusyMinutes = new HashMap<>();

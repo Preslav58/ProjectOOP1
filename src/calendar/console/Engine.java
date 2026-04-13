@@ -3,6 +3,7 @@ package calendar.console;
 import calendar.console.comand.Command;
 import calendar.console.comand.CommandFactory;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Engine {
@@ -14,6 +15,7 @@ public class Engine {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
+        context.setScanner(scanner);
         System.out.println("Welcome to calendar! Please enter command: ");
 
         while (true) {
@@ -47,7 +49,7 @@ public class Engine {
                 Command command = CommandFactory.getCommand(commandName);
 
                 if (command.requiresOpenedFile() && !context.isFileOpen()) {
-                    throw new IllegalStateException("No file is currently open.");
+                    throw new FileNotFoundException();
                 }
 
                 String result = command.execute(args, context);

@@ -1,13 +1,15 @@
 package calendar.console;
 
-import calendar.filemaneger.TextStorage;
+import calendar.fileManeger.TextStorage;
 import calendar.model.Calendar;
+import java.util.Scanner;
 
 public class Context {
     private Calendar curentCalendar;
     private String fileName;
     private TextStorage textStorage;
     private boolean hasUnsavedChanges;
+    private Scanner scanner;
 
     public Context(TextStorage storage) {
         this.textStorage = storage;
@@ -17,13 +19,15 @@ public class Context {
     }
 
     public Calendar getCurentCalendar() {return curentCalendar;}
-    public void setCurentCalendar(Calendar curentCalendar) {this.curentCalendar = curentCalendar;}
+    public void setCurrentCalendar(Calendar curentCalendar) {this.curentCalendar = curentCalendar;}
     public String getFileName() {return fileName;}
     public void setFileName(String fileName) {this.fileName = fileName;}
     public TextStorage getTextStorage() {return textStorage;}
     public void setTextStorage(TextStorage textStorage) {this.textStorage = textStorage;}
     public boolean isHasUnsavedChanges() {return hasUnsavedChanges;}
     public void setHasUnsavedChanges(boolean hasUnsavedChanges) {this.hasUnsavedChanges = hasUnsavedChanges;}
+    public Scanner getScanner() {return scanner;}
+    public void setScanner(Scanner scanner) {this.scanner = scanner;}
 
     public boolean isFileOpen(){
         return curentCalendar != null && fileName != null;
