@@ -3,7 +3,6 @@ package calendar.console.comand.complexCommands.findCommands;
 import calendar.console.comand.Command;
 import calendar.model.Calendar;
 import calendar.model.Event;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,6 +11,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Абстрактен базов клас, съдържащ алгоритъма за намиране на свободно време (слот).
+ * Преизползва се от командите, които търсят свободни прозорци в един или няколко календара,
+ * като съблюдава работното време (08:00 - 17:00) и пропуска почивните дни.
+ */
 public abstract class BaseFindSlot implements Command {
 
     protected String findCommonSlot(LocalDate searchDate, int hours, List<Calendar> calendars) {

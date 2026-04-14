@@ -3,10 +3,13 @@ package calendar.console.comand.complexCommands.findCommands;
 import calendar.console.Context;
 import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Calendar;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 
+/**
+ * Команда за намиране на общо свободно място, синхронизирано с външен календар.
+ * Зарежда графика на колега от друг файл и търси време, в което и двамата са свободни.
+ */
 public class FindSlotWith extends BaseFindSlot {
 
     @Override

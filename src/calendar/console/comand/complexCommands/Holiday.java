@@ -6,6 +6,10 @@ import calendar.exception.InvalidCommandArgumentsException;
 
 import java.time.LocalDate;
 
+/**
+ * Команда за отбелязване на определена дата като неработен (почивен) ден.
+ * Празниците се вземат предвид при търсенето на свободни часове за срещи.
+ */
 public class Holiday implements Command {
 
     @Override

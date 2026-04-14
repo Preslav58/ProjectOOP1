@@ -7,12 +7,16 @@ import calendar.exception.InvalidCommandArgumentsException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Команда за отмяна (изтриване) на събитие от календара.
+ * Търси събитие по точна дата, начален и краен час и го премахва, ако съществува.
+ */
 public class UnBook implements Command {
 
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length != 3) {
-            throw new InvalidCommandArgumentsException("Error. Wrong number of arguments");
+            throw new InvalidCommandArgumentsException("Error. Wrong number of arguments. Please use unbook <date> <starttime> <endtime>");
         }
 
         LocalDate date = LocalDate.parse(args[0]);

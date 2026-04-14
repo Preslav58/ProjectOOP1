@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Команда за извеждане на статистика за натовареност в даден период.
+ * Пресмята общото време на всички събития за всеки ден и ги извежда,
+ * сортирани в низходящ ред по брой заети часове.
+ */
 public class BusyDays implements Command {
 
     @Override

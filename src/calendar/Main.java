@@ -2,6 +2,7 @@ package calendar;
 
 import calendar.console.Context;
 import calendar.console.Engine;
+import calendar.console.comand.CommandFactory;
 import calendar.fileManeger.TextStorage;
 
 
@@ -10,8 +11,9 @@ public class Main {
         TextStorage textStorage = new TextStorage();
 
         Context context = new Context(textStorage);
+        CommandFactory commandFactory = new CommandFactory();
 
-        Engine engine = new Engine(context);
+        Engine engine = new Engine(context, commandFactory);
         engine.run();
     }
 }

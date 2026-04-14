@@ -7,10 +7,29 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Класът {@code TextStorage} реализира интерфейса {@code FileManeger}
+ * и отговаря за запис и зареждане на календарни данни в текстов файл.
+ * <p>
+ * Данните се съхраняват във формат с разделител "|",
+ * като всеки ред представлява събитие или почивен ден.
+ */
 public class TextStorage implements FileManeger {
     private static final String DELIMITER = "\\|";
     private static final String DELIMITER_CHAR = "|";
 
+    /**
+     * Записва съдържанието на календара във файл.
+     * Всеки ред съдържа информация за събитие или почивен ден.
+     * <p>
+     * Формат:
+     * EVENT|date|startTime|endTime|name|notes
+     * HOLIDAY|date
+     *
+     * @param calendar календарът, който ще бъде записан
+     * @param fileName името на файла
+     * @throws Exception при проблем при запис във файла
+     */
     @Override
     public void save(Calendar calendar, String fileName) throws Exception{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
@@ -36,6 +55,18 @@ public class TextStorage implements FileManeger {
         }
     }
 
+    /**
+     * Зарежда календар от текстов файл.
+     * Ако файлът не съществува, връща празен календар.
+     * <p>
+     * Разпознава два типа записи:
+     * - EVENT: събитие
+     * - HOLIDAY: почивен ден
+     *
+     * @param fileName името на файла
+     * @return зареденият календар
+     * @throws Exception при грешка при четене или парсване
+     */
     @Override
     public Calendar load(String fileName) throws Exception{
         Calendar calendar = new Calendar();
@@ -57,8 +88,6 @@ public class TextStorage implements FileManeger {
                     LocalTime endTime = LocalTime.parse(fields[3]);
                     String name = fields[4];
                     String notes = fields.length > 5 ? fields[5] : "";
-
-                    if (notes.equals("")) { notes = ""; }
 
                     calendar.addEvent(new Event(date, startTime, endTime, name, notes));
                 } else if ("HOLIDAY".equals(type)) {

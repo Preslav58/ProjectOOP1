@@ -3,6 +3,10 @@ package calendar.console.comand.basicComands;
 import calendar.console.Context;
 import calendar.console.comand.Command;
 
+/**
+ * Команда за извеждане на помощна информация.
+ * Показва на екрана списък с всички поддържани команди и техния синтаксис.
+ */
 public class Help implements Command {
     @Override
     public boolean requiresOpenedFile() {

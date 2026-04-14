@@ -6,11 +6,15 @@ import calendar.exception.EventConflictException;
 import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Calendar;
 import calendar.model.Event;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
 
+/**
+ * Команда за обединяване на събития от външен календар към текущия.
+ * При откриване на времеви конфликт между две събития, предоставя на потребителя
+ * интерактивно меню за избор (запазване на едното, изтриване или преместване).
+ */
 public class Merge implements Command {
 
     @Override

@@ -8,6 +8,10 @@ import calendar.model.Event;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Команда за преглед на дневната програма.
+ * Извежда хронологичен списък с всички ангажименти за посочена от потребителя дата.
+ */
 public class Agenda implements Command {
 
     @Override

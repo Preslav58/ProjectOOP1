@@ -8,6 +8,11 @@ import calendar.model.Event;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Команда за промяна на детайли на съществуващо събитие.
+ * Позволява редакция на дата, начален час, краен час, име или бележка,
+ * като при промяна на времето отново проверява за конфликти с други събития.
+ */
 public class Change implements Command {
 
     @Override

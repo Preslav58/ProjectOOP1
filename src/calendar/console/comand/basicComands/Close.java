@@ -5,6 +5,10 @@ import calendar.console.comand.Command;
 
 public class Close implements Command {
 
+    /**
+     * Команда за затваряне на текущия календар.
+     * Изчиства данните от паметта на приложението, без да записва незапазените промени.
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         String file = context.getFileName();

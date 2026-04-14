@@ -2,10 +2,13 @@ package calendar.console.comand.complexCommands.findCommands;
 
 import calendar.console.Context;
 import calendar.exception.InvalidCommandArgumentsException;
-
 import java.time.LocalDate;
 import java.util.Collections;
 
+/**
+ * Команда за намиране на свободно място за среща с определена продължителност.
+ * Търси дупка в графика само в рамките на текущия (активния) календар.
+ */
 public class FindSlot extends BaseFindSlot {
 
     @Override

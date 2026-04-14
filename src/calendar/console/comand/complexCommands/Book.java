@@ -4,16 +4,19 @@ import calendar.console.Context;
 import calendar.console.comand.Command;
 import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Event;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Команда за запазване на час за нова среща (събитие).
+ * Извършва валидация за застъпване на часовете с вече съществуващи ангажименти.
+ */
 public class Book implements Command {
 
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 4) {
-            throw new InvalidCommandArgumentsException("Error. Too few arguments.");
+            throw new InvalidCommandArgumentsException("Error. Too few arguments. Please use book <date> <starttime> <endtime> <name> (<note>)");
         }
 
         LocalDate date = LocalDate.parse(args[0]);
