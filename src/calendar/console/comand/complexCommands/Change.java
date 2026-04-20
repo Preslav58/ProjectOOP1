@@ -23,7 +23,7 @@ public class Change implements Command {
 
         LocalDate targetDate = LocalDate.parse(args[0]);
         LocalTime targetStartTime = LocalTime.parse(args[1]);
-        String option = args[2].toLowerCase();
+        ChangeOption option = ChangeOption.fromString(args[2].trim());
 
         StringBuilder newBuilder = new StringBuilder();
         for (int i = 3; i < args.length; i++) {
@@ -43,11 +43,11 @@ public class Change implements Command {
         String newNote = oldEvent.getNotes();
 
         switch (option) {
-            case "date" : newDate = LocalDate.parse(newValue); break;
-            case "starttime" : newStartTime = LocalTime.parse(newValue); break;
-            case "endtime" : newEndTime = LocalTime.parse(newValue); break;
-            case "name" : newName = newValue; break;
-            case "note" : newNote = newValue; break;
+            case DATE : newDate = LocalDate.parse(newValue); break;
+            case STARTTIME : newStartTime = LocalTime.parse(newValue); break;
+            case ENDTIME : newEndTime = LocalTime.parse(newValue); break;
+            case NAME : newName = newValue; break;
+            case NOTE : newNote = newValue; break;
 
             default : throw new InvalidCommandArgumentsException("Error. Invalid option." + option + "Choose from : date, starttime, endtime, name, note.");
         }
