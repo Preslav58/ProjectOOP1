@@ -1,5 +1,6 @@
 package calendar.console;
 
+import calendar.fileManeger.FileManeger;
 import calendar.fileManeger.TextStorage;
 import calendar.model.Calendar;
 import java.util.Scanner;
@@ -12,17 +13,17 @@ import java.util.Scanner;
 public class Context {
     private Calendar curentCalendar;
     private String fileName;
-    private TextStorage textStorage;
+    private FileManeger fileManeger;
     private boolean hasUnsavedChanges;
     private Scanner scanner;
 
     /**
      * Създава нов контекст с подадено хранилище.
      *
-     * @param storage обект за запис и четене на данни
+     * @param fileManeger обект за запис и четене на данни
      */
-    public Context(TextStorage storage) {
-        this.textStorage = storage;
+    public Context(FileManeger fileManeger) {
+        this.fileManeger = fileManeger;
         this.curentCalendar = null;
         this.fileName = null;
         this.hasUnsavedChanges = false;
@@ -30,12 +31,16 @@ public class Context {
 
     public Calendar getCurentCalendar() {return curentCalendar;}
     public void setCurrentCalendar(Calendar curentCalendar) {this.curentCalendar = curentCalendar;}
+
     public String getFileName() {return fileName;}
     public void setFileName(String fileName) {this.fileName = fileName;}
-    public TextStorage getTextStorage() {return textStorage;}
-    public void setTextStorage(TextStorage textStorage) {this.textStorage = textStorage;}
-    public boolean isHasUnsavedChanges() {return hasUnsavedChanges;}
+
+    public FileManeger getFileManeger() {return fileManeger;}
+    public void setFileManeger(FileManeger fileManeger) {this.fileManeger = fileManeger;}
+
+    public boolean hasUnsavedChanges() {return hasUnsavedChanges;}
     public void setHasUnsavedChanges(boolean hasUnsavedChanges) {this.hasUnsavedChanges = hasUnsavedChanges;}
+
     public Scanner getScanner() {return scanner;}
     public void setScanner(Scanner scanner) {this.scanner = scanner;}
 

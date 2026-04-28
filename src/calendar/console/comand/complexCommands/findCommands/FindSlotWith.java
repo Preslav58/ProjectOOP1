@@ -11,7 +11,6 @@ import java.util.Arrays;
  * Зарежда графика на колега от друг файл и търси време, в което и двамата са свободни.
  */
 public class FindSlotWith extends BaseFindSlot {
-
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 3) {
@@ -23,10 +22,10 @@ public class FindSlotWith extends BaseFindSlot {
         String secondCalendarFile = args[2];
 
         if (hours > 9) {
-            throw new IllegalArgumentException("Error. Hours cannot be greater than 9");
+            throw new InvalidCommandArgumentsException("Error. Hours cannot be greater than 9");
         }
 
-        Calendar secondCalendar = context.getTextStorage().load(secondCalendarFile);
+        Calendar secondCalendar = context.getFileManeger().load(secondCalendarFile);
 
         return findCommonSlot(searchDate, hours, Arrays.asList(context.getCurentCalendar(), secondCalendar));
     }

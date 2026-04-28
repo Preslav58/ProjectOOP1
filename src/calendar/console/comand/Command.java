@@ -9,6 +9,7 @@ import calendar.console.Context;
  * и съдържа собствена независима логика.
  */
 public interface Command {
+
     /**
      * Изпълнява същинската логика на командата.
      *

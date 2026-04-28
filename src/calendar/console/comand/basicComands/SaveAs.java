@@ -4,12 +4,11 @@ import calendar.console.Context;
 import calendar.console.comand.Command;
 import calendar.exception.InvalidCommandArgumentsException;
 
+/**
+ * Команда за запазване на текущия календар в нов файл.
+ * Потребителят задава ново име или път до файла, където да бъдат записани данните.
+ */
 public class SaveAs implements Command {
-
-    /**
-     * Команда за запазване на текущия календар в нов файл.
-     * Потребителят задава ново име или път до файла, където да бъдат записани данните.
-     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 1) {
@@ -18,7 +17,7 @@ public class SaveAs implements Command {
 
         String newFile = args[0];
 
-        context.getTextStorage().save(context.getCurentCalendar(), newFile);
+        context.getFileManeger().save(context.getCurentCalendar(), newFile);
         context.setFileName(newFile);
         context.setHasUnsavedChanges(false);
 

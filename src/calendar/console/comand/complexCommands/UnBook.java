@@ -9,10 +9,10 @@ import java.time.LocalTime;
 
 /**
  * Команда за отмяна (изтриване) на събитие от календара.
- * Търси събитие по точна дата, начален и краен час и го премахва, ако съществува.
+ * Търси събитие по точна дата, начален и краен час и делегира изтриването
+ * на обекта {@code Calendar}, който от своя страна го премахва от съответния ден.
  */
 public class UnBook implements Command {
-
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length != 3) {

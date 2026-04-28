@@ -10,7 +10,6 @@ import java.util.Collections;
  * Търси дупка в графика само в рамките на текущия (активния) календар.
  */
 public class FindSlot extends BaseFindSlot {
-
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 2) {

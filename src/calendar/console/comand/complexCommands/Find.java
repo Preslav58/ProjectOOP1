@@ -7,11 +7,10 @@ import calendar.model.Event;
 
 /**
  * Команда за търсене на събития по ключова дума.
- * Търси подадения низ в името или бележките на всички събития
- * без да прави разлика между малки и главни букви (case-insensitive).
+ * Агрегира всички събития от календара и търси подадения низ в тяхното име
+ * или бележки, без да прави разлика между малки и главни букви (case-insensitive).
  */
 public class Find implements Command {
-
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 1) {

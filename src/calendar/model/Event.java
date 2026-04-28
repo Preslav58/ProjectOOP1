@@ -6,31 +6,27 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 /**
- * Клас, който представя събитие в календар.
- * Съдържа дата, начален и краен час, име и допълнителни бележки.
+ * Клас, който представя единично събитие в календара.
+ * Съдържа информация за дата, времеви интервал, име и допълнителни бележки.
  */
 public class Event {
     private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private TimeInterval timeInterval;
     private String name;
     private String notes;
 
     /**
      * Създава ново събитие с посочените параметри.
      *
-     * @param date      датата на събитието
-     * @param startTime началният час на събитието
-     * @param endTime   крайният час на събитието
-     * @param name      името на събитието (не може да бъде null)
-     * @param notes     допълнителни бележки (може да бъде празен низ)
-     * @throws InvalidEventTimeException ако крайният час е преди началния
-     * @throws NullPointerException      ако някой от задължителните параметри е null
+     * @param date         датата на събитието
+     * @param timeInterval времевият интервал (начален и краен час)
+     * @param name         името на събитието
+     * @param notes        допълнителни бележки (може да бъде празен низ)
+     * @throws NullPointerException ако някой от задължителните параметри е null
      */
-    public Event(LocalDate date, LocalTime startTime, LocalTime endTime, String name, String notes) {
+    public Event(LocalDate date, TimeInterval timeInterval, String name, String notes) {
         setDate(date);
-        setStartTime(startTime);
-        setEndTime(endTime);
+        setTimeInterval(timeInterval);
         setName(name);
         setNotes(notes);
     }
@@ -43,17 +39,13 @@ public class Event {
        this.date = Objects.requireNonNull(date, "date cannot be null");
     }
 
-    public LocalTime getStartTime() {return startTime;}
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = Objects.requireNonNull(startTime, "startTime cannot be null");
-        validateTimes();
+    public TimeInterval getTimeInterval() {return timeInterval;}
+    public void setTimeInterval(TimeInterval timeInterval) {
+        this.timeInterval = Objects.requireNonNull(timeInterval, "TimeInterval cannot be null");
     }
 
-    public LocalTime getEndTime() {return endTime;}
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = Objects.requireNonNull(endTime, "endTime cannot be null");
-        validateTimes();
-    }
+    public LocalTime getStartTime() {return timeInterval.getStartTime();}
+    public LocalTime getEndTime() {return timeInterval.getEndTime();}
 
     public String getName() {return name;}
     public void setName(String name) {
@@ -66,18 +58,8 @@ public class Event {
     }
 
     /**
-     * Проверява дали часовете на събитието са валидни (краят да е след началото).
-     */
-    private void validateTimes() {
-        if (startTime != null && endTime != null) {
-            if (!endTime.isAfter(startTime)) {
-                throw new InvalidEventTimeException("Error. End time must be after start time");
-            }
-        }
-    }
-
-    /**
      * Проверява дали текущото събитие се застъпва времево с друго подадено събитие.
+     * Логиката за сравнение е делегирана на обекта {@code TimeInterval}.
      *
      * @param otherEvent другото събитие, с което сравняваме
      * @return {@code true} ако има времево застъпване, иначе {@code false}
@@ -86,26 +68,27 @@ public class Event {
         if (!this.date.equals(otherEvent.date)) {
             return false;
         }
-        return this.startTime.isBefore(otherEvent.endTime) &&
-                this.endTime.isAfter(otherEvent.startTime);
+        return this.timeInterval.overlapsWith(otherEvent.timeInterval);
     }
 
+    /**
+     * Equals, hashcode и toString.
+     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Event event)) return false;
         return Objects.equals(date, event.date) &&
-                Objects.equals(startTime, event.startTime) &&
-                Objects.equals(endTime, event.endTime) &&
+                Objects.equals(timeInterval, event.timeInterval) &&
                 Objects.equals(name, event.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, startTime, endTime, name);
+        return Objects.hash(date, timeInterval, name);
     }
 
     @Override
     public String toString() {
-        return String.format("[%s] %s - %s (%s)", date, startTime, endTime, name);
+        return String.format("[%s] %s (%s)", date, timeInterval.toString() , name);
     }
 }

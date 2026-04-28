@@ -17,7 +17,7 @@ public class Open implements Command {
         }
         String file = args[0];
 
-        Calendar loadedCalendar = context.getTextStorage().load(file);
+        Calendar loadedCalendar = context.getFileManeger().load(file);
 
         context.setCurrentCalendar(loadedCalendar);
         context.setFileName(file);

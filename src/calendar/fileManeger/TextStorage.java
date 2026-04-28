@@ -2,6 +2,7 @@ package calendar.fileManeger;
 
 import calendar.model.Calendar;
 import calendar.model.Event;
+import calendar.model.TimeInterval;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -34,7 +35,7 @@ public class TextStorage implements FileManeger {
     public void save(Calendar calendar, String fileName) throws Exception{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             for (Event event : calendar.getEvents()) {
-                String notes = event.getNotes().isEmpty() ? "" : event.getNotes();
+                String notes = event.getNotes().isEmpty() ? " " : event.getNotes();
 
                 String line = String.join(DELIMITER_CHAR, "EVENT",
                         event.getDate().toString(),
@@ -57,15 +58,15 @@ public class TextStorage implements FileManeger {
 
     /**
      * Зарежда календар от текстов файл.
-     * Ако файлът не съществува, връща празен календар.
+     * Ако файлът не съществува, връща нов празен календар.
      * <p>
      * Разпознава два типа записи:
      * - EVENT: събитие
      * - HOLIDAY: почивен ден
      *
      * @param fileName името на файла
-     * @return зареденият календар
-     * @throws Exception при грешка при четене или парсване
+     * @return зареденият календар, попълнен с данни от файла
+     * @throws Exception при грешка при четене или парсване на датите и часовете
      */
     @Override
     public Calendar load(String fileName) throws Exception{
@@ -89,7 +90,14 @@ public class TextStorage implements FileManeger {
                     String name = fields[4];
                     String notes = fields.length > 5 ? fields[5] : "";
 
-                    calendar.addEvent(new Event(date, startTime, endTime, name, notes));
+                    //за да не се счупи split
+                    if (notes.equals(" ")) {
+                        notes = ""; // Възстановяваме празната бележка
+                    }
+
+                    TimeInterval timeInterval = new TimeInterval(startTime, endTime);
+                    calendar.addEvent(new Event(date, timeInterval, name, notes));
+
                 } else if ("HOLIDAY".equals(type)) {
                     LocalDate date = LocalDate.parse(fields[1]);
                     calendar.addHoliday(date);

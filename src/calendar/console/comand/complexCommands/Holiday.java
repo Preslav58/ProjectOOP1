@@ -8,10 +8,10 @@ import java.time.LocalDate;
 
 /**
  * Команда за отбелязване на определена дата като неработен (почивен) ден.
- * Празниците се вземат предвид при търсенето на свободни часове за срещи.
+ * Делегира логиката на календара, който намира съответния обект {@code Day}
+ * и променя неговия статус. Празниците се вземат предвид при търсенето на свободни слотове.
  */
 public class Holiday implements Command {
-
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 1) {

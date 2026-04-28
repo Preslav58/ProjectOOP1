@@ -4,15 +4,18 @@ import calendar.console.Context;
 import calendar.console.comand.Command;
 import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Event;
+import calendar.model.TimeInterval;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
  * Команда за запазване на час за нова среща (събитие).
- * Извършва валидация за застъпване на часовете с вече съществуващи ангажименти.
+ * Създава обект {@code TimeInterval} за управление на времето и го подава
+ * за валидация към календара. Календарът отговаря за проверката за застъпване
+ * (overlap) с вече съществуващи ангажименти в рамките на съответния ден.
  */
 public class Book implements Command {
-
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 4) {
@@ -33,7 +36,8 @@ public class Book implements Command {
             note = noteBuilder.toString().trim();
         }
 
-        Event newEvent = new Event(date, startTime, endTime, name, note);
+        TimeInterval timeInterval = new TimeInterval(startTime, endTime);
+        Event newEvent = new Event(date, timeInterval, name, note);
         context.getCurentCalendar().addEvent(newEvent);
         context.setHasUnsavedChanges(true);
 

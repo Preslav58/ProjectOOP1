@@ -6,17 +6,20 @@ import calendar.exception.EventConflictException;
 import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Calendar;
 import calendar.model.Event;
+import calendar.model.TimeInterval;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
 
 /**
  * Команда за обединяване на събития от външен календар към текущия.
- * При откриване на времеви конфликт между две събития, предоставя на потребителя
- * интерактивно меню за избор (запазване на едното, изтриване или преместване).
+ * Зарежда външния файл чрез {@code FileManager} и се опитва да прехвърли всички събития.
+ * При откриване на времеви конфликт (хващане на {@code EventConflictException}),
+ * спира изпълнението и предоставя на потребителя интерактивно конзолно меню за разрешаване на спора
+ * (запазване, изтриване или ръчно преместване).
  */
 public class Merge implements Command {
-
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 1) {
@@ -24,12 +27,13 @@ public class Merge implements Command {
         }
 
         String externalFileName = args[0];
-        Calendar externalCalendar = context.getTextStorage().load(externalFileName);
+        Calendar externalCalendar = context.getFileManeger().load(externalFileName);
         Scanner scanner = context.getScanner();
         int addedCount = 0;
 
         for (Event externalEvet : externalCalendar.getEvents()) {
             try {
+                // Опитваме да добавим външното събитие
                 context.getCurentCalendar().addEvent(externalEvet);
                 addedCount++;
 
@@ -53,12 +57,14 @@ public class Merge implements Command {
                     }
 
                     case "2" -> {
+                        // Намираме с кое събитие имаме конфликт и го трием
                         Event conflictEvent = findConflictingEvent(context.getCurentCalendar(), externalEvet);
 
                         if (conflictEvent != null) {
                             context.getCurentCalendar().deleteEvent(conflictEvent.getDate(), conflictEvent.getStartTime(), conflictEvent.getEndTime());
                         }
 
+                        // Вече е свободно, добавяме външното
                         context.getCurentCalendar().addEvent(externalEvet);
                         addedCount++;
                         System.out.println("Your Event has been deleted, External event added");
@@ -74,7 +80,8 @@ public class Merge implements Command {
                         System.out.println("Please enter a new end time (HH:MM): ");
                         LocalTime newEnd = LocalTime.parse(scanner.nextLine().trim());
 
-                        Event modifiedEvent = new Event(newDate, newStart, newEnd, externalEvet.getName(), externalEvet.getNotes());
+                        TimeInterval newTimeInterval = new TimeInterval(newStart, newEnd);
+                        Event modifiedEvent = new Event(newDate,newTimeInterval , externalEvet.getName(), externalEvet.getNotes());
 
                         try {
                             context.getCurentCalendar().addEvent(modifiedEvent);
@@ -91,6 +98,7 @@ public class Merge implements Command {
             }
         }
 
+        // Прехвърляме и всички почивни дни
         for (LocalDate holiday : externalCalendar.getHolidays()) {
             context.getCurentCalendar().addHoliday(holiday);
         }
@@ -99,9 +107,13 @@ public class Merge implements Command {
         return String.format("\n Merge finish! Events added %s from external calendar", addedCount);
     }
 
-    private Event findConflictingEvent(Calendar myCalendar, Event externalEvet) {
-        for (Event myEvent : myCalendar.getEvents()) {
-            if (myEvent.overlap(externalEvet)) {
+    /**
+     * Помощен метод, който намира кое от текущите събития се застъпва с външното.
+     * Оптимизиран е да търси САМО в рамките на конкретния ден.
+     */
+    private Event findConflictingEvent(Calendar myCalendar, Event externalEvent) {
+        for (Event myEvent : myCalendar.getEventsForDate(externalEvent.getDate())) {
+            if (myEvent.overlap(externalEvent)) {
                 return myEvent;
             }
         }

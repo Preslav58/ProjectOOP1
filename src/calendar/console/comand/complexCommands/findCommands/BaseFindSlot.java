@@ -18,6 +18,14 @@ import java.util.List;
  */
 public abstract class BaseFindSlot implements Command {
 
+    /**
+     * Търси общ свободен времеви прозорец във всички подадени календари.
+     *
+     * @param searchDate датата, от която започва търсенето
+     * @param hours      желаната продължителност на срещата в часове
+     * @param calendars  списък от календари, с които трябва да се синхронизира срещата
+     * @return текстово съобщение с намерения резултат или съобщение за неуспех
+     */
     protected String findCommonSlot(LocalDate searchDate, int hours, List<Calendar> calendars) {
         long minutes = hours * 60L;
         LocalTime workStart = LocalTime.of(8, 0);
@@ -35,6 +43,7 @@ public abstract class BaseFindSlot implements Command {
 
             boolean isHoliday = false;
 
+            // Проверяваме дали денят е празник, в който и да е от календарите
             for (Calendar cal : calendars) {
                 if (cal.getHolidays().contains(searchDate)) {
                     isHoliday = true;
@@ -48,12 +57,13 @@ public abstract class BaseFindSlot implements Command {
                 continue;
             }
 
+            // Обединяваме събитията от всички календари за съответния ден
             List<Event> combinedEvents = new ArrayList<>();
-
             for (Calendar cal : calendars) {
                 combinedEvents.addAll(cal.getEventsForDate(searchDate));
             }
 
+            // Сортираме обединения списък хронологично по начален час
             combinedEvents.sort(Comparator.comparing(Event::getStartTime));
 
             LocalTime currentSlotstart = workStart;
@@ -63,6 +73,7 @@ public abstract class BaseFindSlot implements Command {
                 if (!event.getEndTime().isAfter(workStart)) continue;
                 if (!event.getStartTime().isBefore(workEnd)) continue;
 
+                // Проверяваме дали има достатъчно място преди текущото събитие
                 if (currentSlotstart.isBefore(event.getStartTime())) {
                     long gapMinutes = ChronoUnit.MINUTES.between(currentSlotstart, event.getStartTime());
                     if (gapMinutes >= minutes) {
@@ -71,11 +82,13 @@ public abstract class BaseFindSlot implements Command {
                     }
                 }
 
+                // Преместваме началото на свободното време след текущото събитие
                 if (event.getEndTime().isAfter(currentSlotstart)) {
                     currentSlotstart = event.getEndTime();
                 }
             }
 
+            // Проверяваме дали има достатъчно място след последното събитие за деня
             if (!slotFound && currentSlotstart.isBefore(workEnd)) {
                 long gapMinutes = ChronoUnit.MINUTES.between(currentSlotstart, workEnd);
                 if (gapMinutes >= minutes) {

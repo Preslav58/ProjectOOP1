@@ -10,10 +10,11 @@ import java.util.List;
 
 /**
  * Команда за преглед на дневната програма.
- * Извежда хронологичен списък с всички ангажименти за посочена от потребителя дата.
+ * Извежда списък с всички ангажименти за посочена от потребителя дата.
+ * Данните се извличат директно от съответния обект {@code Day} в календара,
+ * което гарантира, че те вече са подредени в хронологичен ред.
  */
 public class Agenda implements Command {
-
     @Override
     public String execute(String[] args, Context context) throws Exception {
         if (args.length < 1) {
@@ -35,6 +36,6 @@ public class Agenda implements Command {
             builder.append(event.toString()).append("\n");
         }
 
-        return builder.toString();
+        return builder.toString().trim();
     }
 }
