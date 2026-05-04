@@ -38,11 +38,9 @@ public class BusyDays implements Command {
         for (Event event : context.getCurentCalendar().getEvents()) {
             LocalDate eventDate = event.getDate();
 
-            boolean isAfterOrEqual = !eventDate.isBefore(from);
-            boolean isBeforeOrEqual = !eventDate.isAfter(to);
 
-            if (isAfterOrEqual && isBeforeOrEqual) {
-                long minutes = ChronoUnit.MINUTES.between(event.getStartTime(), event.getEndTime());
+            if (!eventDate.isBefore(from) && !eventDate.isAfter(to)) {
+                long minutes = event.getTimeInterval().getDurationMinutes();
                 dailyBusyMinutes.put(eventDate, dailyBusyMinutes.getOrDefault(eventDate, 0L) + minutes);
             }
         }
@@ -53,9 +51,8 @@ public class BusyDays implements Command {
 
         List<Map.Entry<LocalDate, Long>> sortedEntries = new ArrayList<>(dailyBusyMinutes.entrySet());
 
-        sortedEntries.sort((entry1, entry2) -> {
-            return entry2.getValue().compareTo(entry1.getValue());
-        });
+        sortedEntries.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+
 
         StringBuilder result = new StringBuilder();
         result.append("Load statistics (").append(from).append(" to ").append(to).append(")\n");
