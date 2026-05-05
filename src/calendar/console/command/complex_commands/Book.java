@@ -1,7 +1,7 @@
-package calendar.console.comand.complexCommands;
+package calendar.console.command.complex_commands;
 
 import calendar.console.Context;
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Event;
 import calendar.model.TimeInterval;
@@ -18,10 +18,6 @@ import java.time.LocalTime;
 public class Book implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (args.length < 4) {
-            throw new InvalidCommandArgumentsException("Error. Too few arguments. Please use book <date> <starttime> <endtime> <name> (<note>)");
-        }
-
         LocalDate date = LocalDate.parse(args[0]);
         LocalTime startTime = LocalTime.parse(args[1]);
         LocalTime endTime = LocalTime.parse(args[2]);
@@ -37,10 +33,15 @@ public class Book implements Command {
         }
 
         TimeInterval timeInterval = new TimeInterval(startTime, endTime);
-        Event newEvent = new Event(date, timeInterval, name, note);
-        context.getCurentCalendar().addEvent(newEvent);
+        Event newEvent = new Event(timeInterval, name, note);
+        context.getCurentCalendar().addEvent(date, newEvent);
         context.setHasUnsavedChanges(true);
 
         return "Successfully booked hour for: " + newEvent.toString();
+    }
+
+    @Override
+    public int getRequiredArgsCount() {
+        return 4;
     }
 }

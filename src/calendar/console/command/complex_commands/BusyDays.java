@@ -1,13 +1,13 @@
-package calendar.console.comand.complexCommands;
+package calendar.console.command.complex_commands;
 
 import calendar.console.Context;
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 import calendar.exception.CalendarException;
 import calendar.exception.InvalidCommandArgumentsException;
+import calendar.model.Day;
 import calendar.model.Event;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,10 +22,6 @@ import java.util.Map;
 public class BusyDays implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (args.length < 2) {
-            throw new InvalidCommandArgumentsException("Error. Not enough arguments. Please use busydays <from> <to>");
-        }
-
         LocalDate from = LocalDate.parse(args[0]);
         LocalDate to = LocalDate.parse(args[1]);
 
@@ -35,13 +31,15 @@ public class BusyDays implements Command {
 
         Map<LocalDate, Long> dailyBusyMinutes = new HashMap<>();
 
-        for (Event event : context.getCurentCalendar().getEvents()) {
-            LocalDate eventDate = event.getDate();
+        for (Day day : context.getCurentCalendar().getDays()) {
+            LocalDate eventDate = day.getDate();
 
 
             if (!eventDate.isBefore(from) && !eventDate.isAfter(to)) {
-                long minutes = event.getTimeInterval().getDurationMinutes();
-                dailyBusyMinutes.put(eventDate, dailyBusyMinutes.getOrDefault(eventDate, 0L) + minutes);
+                for (Event event : day.getEvents()) {
+                    long minutes = event.getTimeInterval().getDurationMinutes();
+                    dailyBusyMinutes.put(eventDate, dailyBusyMinutes.getOrDefault(eventDate, 0L) + minutes);
+                }
             }
         }
 
@@ -69,4 +67,10 @@ public class BusyDays implements Command {
 
         return result.toString().trim();
     }
+
+    @Override
+    public int getRequiredArgsCount() {
+        return 2;
+    }
+
 }

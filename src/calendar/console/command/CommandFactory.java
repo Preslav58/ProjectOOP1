@@ -1,10 +1,10 @@
-package calendar.console.comand;
+package calendar.console.command;
 
-import calendar.console.comand.basicComands.*;
-import calendar.console.comand.complexCommands.*;
-import calendar.console.comand.complexCommands.changeCommand.Change;
-import calendar.console.comand.complexCommands.findCommands.FindSlot;
-import calendar.console.comand.complexCommands.findCommands.FindSlotWith;
+import calendar.console.command.basic_commands.*;
+import calendar.console.command.complex_commands.*;
+import calendar.console.command.complex_commands.change_command.Change;
+import calendar.console.command.complex_commands.find_commands.FindSlot;
+import calendar.console.command.complex_commands.find_commands.FindSlotWith;
 import calendar.exception.InvalidCommandArgumentsException;
 import java.util.HashMap;
 import java.util.Map;

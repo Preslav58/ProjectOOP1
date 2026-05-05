@@ -1,7 +1,7 @@
-package calendar.console.comand.complexCommands;
+package calendar.console.command.complex_commands;
 
 import calendar.console.Context;
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 import calendar.exception.InvalidCommandArgumentsException;
 
 import java.time.LocalDate;
@@ -14,10 +14,6 @@ import java.time.LocalDate;
 public class Holiday implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (args.length < 1) {
-            throw new InvalidCommandArgumentsException("Error. No date. Please use holiday <date>");
-        }
-
         LocalDate date = LocalDate.parse(args[0]);
 
         context.getCurentCalendar().addHoliday(date);
@@ -25,4 +21,10 @@ public class Holiday implements Command {
 
         return date.toString() + " successfully marked as a holiday.";
     }
+
+    @Override
+    public int getRequiredArgsCount() {
+        return 1;
+    }
+
 }

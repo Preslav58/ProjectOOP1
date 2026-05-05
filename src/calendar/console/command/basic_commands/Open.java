@@ -1,7 +1,7 @@
-package calendar.console.comand.basicComands;
+package calendar.console.command.basic_commands;
 
 import calendar.console.Context;
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Calendar;
 
@@ -12,9 +12,6 @@ import calendar.model.Calendar;
 public class Open implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception{
-        if (args.length < 1){
-            throw new InvalidCommandArgumentsException("Error. Not enough arguments. Usage: open <file>");
-        }
         String file = args[0];
 
         Calendar loadedCalendar = context.getFileManeger().load(file);
@@ -30,4 +27,10 @@ public class Open implements Command {
     public boolean requiresOpenedFile() {
         return false;
     }
+
+    @Override
+    public int getRequiredArgsCount() {
+        return 1;
+    }
+
 }

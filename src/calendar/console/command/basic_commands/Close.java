@@ -1,7 +1,7 @@
-package calendar.console.comand.basicComands;
+package calendar.console.command.basic_commands;
 
 import calendar.console.Context;
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 
 /**
  * Команда за затваряне на текущия календар.

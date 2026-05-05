@@ -1,4 +1,4 @@
-package calendar.console.comand.complexCommands.findCommands;
+package calendar.console.command.complex_commands.find_commands;
 
 import calendar.console.Context;
 import calendar.exception.InvalidCommandArgumentsException;
@@ -13,10 +13,6 @@ import java.util.Arrays;
 public class FindSlotWith extends BaseFindSlot {
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (args.length < 3) {
-            throw new InvalidCommandArgumentsException("Error. Wrong number of arguments. Please use: findslotwith <fromdate> <hours> <calendar>");
-        }
-
         LocalDate searchDate = LocalDate.parse(args[0]);
         int hours = Integer.parseInt(args[1]);
         String secondCalendarFile = args[2];
@@ -29,4 +25,10 @@ public class FindSlotWith extends BaseFindSlot {
 
         return findCommonSlot(searchDate, hours, Arrays.asList(context.getCurentCalendar(), secondCalendar));
     }
+
+    @Override
+    public int getRequiredArgsCount() {
+        return 3;
+    }
+
 }

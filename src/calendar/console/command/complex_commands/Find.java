@@ -1,8 +1,9 @@
-package calendar.console.comand.complexCommands;
+package calendar.console.command.complex_commands;
 
 import calendar.console.Context;
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 import calendar.exception.InvalidCommandArgumentsException;
+import calendar.model.Day;
 import calendar.model.Event;
 
 /**
@@ -13,19 +14,17 @@ import calendar.model.Event;
 public class Find implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (args.length < 1) {
-            throw new InvalidCommandArgumentsException("Error. Not enough arguments. Please use find <string> ");
-        }
-
         String keyword = String.join(" ", args).toLowerCase();
 
         StringBuilder builder = new StringBuilder();
-        for(Event event : context.getCurentCalendar().getEvents()) {
-            String name = event.getName().toLowerCase();
-            String note = event.getNotes().toLowerCase();
+        for(Day day : context.getCurentCalendar().getDays()){
+            for(Event event : day.getEvents()) {
+                String name = event.getName().toLowerCase();
+                String note = event.getNotes().toLowerCase();
 
-            if(name.contains(keyword) || note.contains(keyword)) {
-                builder.append(event.toString()).append("\n");
+                if (name.contains(keyword) || note.contains(keyword)) {
+                    builder.append("[").append(day.getDate()).append("] ").append(event.toString()).append("\n");
+                }
             }
         }
 
@@ -35,4 +34,10 @@ public class Find implements Command {
 
         return builder.toString();
     }
+
+    @Override
+    public int getRequiredArgsCount() {
+        return 1;
+    }
+
 }

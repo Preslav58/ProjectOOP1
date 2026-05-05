@@ -40,8 +40,8 @@ public class Calendar {
      * @param nEvent събитието за добавяне (не трябва да е null)
      * @throws EventConflictException ако има времево застъпване с друго събитие
      */
-    public void addEvent(Event nEvent) {
-        Day day = getOrCreateDay(nEvent.getDate());
+    public void addEvent(LocalDate date, Event nEvent) {
+        Day day = getOrCreateDay(date);
         day.addEvent(nEvent);
     }
 
@@ -111,14 +111,8 @@ public class Calendar {
      *
      * @return списък със всички събития
      */
-    public List<Event> getEvents() {
-        List<Event> allEvents = new ArrayList<>();
-
-        for (Day day : days.values()) {
-            allEvents.addAll(day.getEvents());
-        }
-
-        return allEvents;
+    public Collection<Day> getDays() {
+        return Collections.unmodifiableCollection(days.values());
     }
 
     /**

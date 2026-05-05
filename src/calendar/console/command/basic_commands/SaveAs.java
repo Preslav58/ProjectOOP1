@@ -1,7 +1,7 @@
-package calendar.console.comand.basicComands;
+package calendar.console.command.basic_commands;
 
 import calendar.console.Context;
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 import calendar.exception.InvalidCommandArgumentsException;
 
 /**
@@ -11,10 +11,6 @@ import calendar.exception.InvalidCommandArgumentsException;
 public class SaveAs implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (args.length < 1) {
-            throw new InvalidCommandArgumentsException("Error. No name for saving. Please use save as <file>");
-        }
-
         String newFile = args[0];
 
         context.getFileManeger().save(context.getCurentCalendar(), newFile);
@@ -23,4 +19,10 @@ public class SaveAs implements Command {
 
         return "Successfully saved " + newFile;
     }
+
+    @Override
+    public int getRequiredArgsCount() {
+        return 1;
+    }
+
 }

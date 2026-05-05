@@ -29,7 +29,6 @@ public class Day {
     }
 
     public LocalDate getDate() {return date;}
-
     public boolean isHoliday() {return isHoliday;}
     public void setHoliday(boolean holiday) {
         this.isHoliday = holiday;

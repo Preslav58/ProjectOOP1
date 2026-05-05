@@ -10,7 +10,6 @@ import java.util.Objects;
  * Съдържа информация за дата, времеви интервал, име и допълнителни бележки.
  */
 public class Event {
-    private LocalDate date;
     private TimeInterval timeInterval;
     private String name;
     private String notes;
@@ -18,14 +17,12 @@ public class Event {
     /**
      * Създава ново събитие с посочените параметри.
      *
-     * @param date         датата на събитието
      * @param timeInterval времевият интервал (начален и краен час)
      * @param name         името на събитието
      * @param notes        допълнителни бележки (може да бъде празен низ)
      * @throws NullPointerException ако някой от задължителните параметри е null
      */
-    public Event(LocalDate date, TimeInterval timeInterval, String name, String notes) {
-        setDate(date);
+    public Event(TimeInterval timeInterval, String name, String notes) {
         setTimeInterval(timeInterval);
         setName(name);
         setNotes(notes);
@@ -34,25 +31,34 @@ public class Event {
     /**
      * гетъри  и сетари @param date @param startTime @param EndTime @param name cannot be null
      */
-    public LocalDate getDate() {return date;}
-    public void setDate(LocalDate date) {
-       this.date = Objects.requireNonNull(date, "date cannot be null");
-    }
-
     public TimeInterval getTimeInterval() {return timeInterval;}
+    /**
+     * гетъри  и сетари @param date @param startTime @param EndTime @param name cannot be null
+     */
     public void setTimeInterval(TimeInterval timeInterval) {
         this.timeInterval = Objects.requireNonNull(timeInterval, "TimeInterval cannot be null");
     }
-
-    public LocalTime getStartTime() {return timeInterval.getStartTime();}
+    /**
+     * гетъри  и сетари @param date @param startTime @param EndTime @param name cannot be null
+     */
+    public LocalTime getStartTime() {return timeInterval.getStartTime();}/**
+     * гетъри  и сетари @param date @param startTime @param EndTime @param name cannot be null
+     */
     public LocalTime getEndTime() {return timeInterval.getEndTime();}
-
+    /**
+     * гетъри  и сетари @param date @param startTime @param EndTime @param name cannot be null
+     */
     public String getName() {return name;}
     public void setName(String name) {
         this.name = Objects.requireNonNull(name, "name cannot be null");
     }
-
+    /**
+     * гетъри  и сетари @param date @param startTime @param EndTime @param name cannot be null
+     */
     public String getNotes() {return notes;}
+    /**
+     * гетъри  и сетари @param date @param startTime @param EndTime @param name cannot be null
+     */
     public void setNotes(String notes) {
         this.notes = (notes == null) ? "" : notes;
     }
@@ -65,9 +71,6 @@ public class Event {
      * @return {@code true} ако има времево застъпване, иначе {@code false}
      */
     public boolean overlap(Event otherEvent) {
-        if (!this.date.equals(otherEvent.date)) {
-            return false;
-        }
         return this.timeInterval.overlapsWith(otherEvent.timeInterval);
     }
 
@@ -77,18 +80,21 @@ public class Event {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Event event)) return false;
-        return Objects.equals(date, event.date) &&
-                Objects.equals(timeInterval, event.timeInterval) &&
+        return Objects.equals(timeInterval, event.timeInterval) &&
                 Objects.equals(name, event.name);
     }
-
+    /**
+     * Equals, hashcode и toString.
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(date, timeInterval, name);
+        return Objects.hash( timeInterval, name);
     }
-
+    /**
+     * Equals, hashcode и toString.
+     */
     @Override
     public String toString() {
-        return String.format("[%s] %s (%s)", date, timeInterval.toString() , name);
+        return String.format(" %s (%s)", timeInterval.toString() , name);
     }
 }

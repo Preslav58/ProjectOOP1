@@ -1,7 +1,6 @@
 package calendar.console;
 
-import calendar.fileManeger.FileManeger;
-import calendar.fileManeger.TextStorage;
+import calendar.file_manager.FileManeger;
 import calendar.model.Calendar;
 import java.util.Scanner;
 

@@ -1,6 +1,6 @@
-package calendar.console.comand.complexCommands.findCommands;
+package calendar.console.command.complex_commands.find_commands;
 
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 import calendar.model.Calendar;
 import calendar.model.Event;
 import java.time.DayOfWeek;
@@ -17,7 +17,6 @@ import java.util.List;
  * като съблюдава работното време (08:00 - 17:00) и пропуска почивните дни.
  */
 public abstract class BaseFindSlot implements Command {
-
     /**
      * Търси общ свободен времеви прозорец във всички подадени календари.
      *

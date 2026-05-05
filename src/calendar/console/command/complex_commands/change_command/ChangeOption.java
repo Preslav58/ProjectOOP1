@@ -1,4 +1,4 @@
-package calendar.console.comand.complexCommands.changeCommand;
+package calendar.console.command.complex_commands.change_command;
 
 /**
  * Изброим тип (Enum), който дефинира всички възможни опции за промяна на събитие.

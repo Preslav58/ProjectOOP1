@@ -1,4 +1,4 @@
-package calendar.console.comand;
+package calendar.console.command;
 
 import calendar.console.Context;
 
@@ -26,5 +26,14 @@ public interface Command {
      */
     default boolean requiresOpenedFile() {
         return true;
+    }
+
+    /**
+     * Връща минималния брой аргументи, необходими за изпълнение на командата.
+     * По подразбиране е 0 (за команди като save, close, help).
+     * @return минимален брой думи след командата
+     */
+    default int getRequiredArgsCount() {
+        return 0;
     }
 }

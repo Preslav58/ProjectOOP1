@@ -1,7 +1,7 @@
-package calendar.console.comand.complexCommands.changeCommand;
+package calendar.console.command.complex_commands.change_command;
 
 import calendar.console.Context;
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 import calendar.exception.InvalidCommandArgumentsException;
 import calendar.model.Event;
 import calendar.model.TimeInterval;
@@ -17,10 +17,6 @@ import java.time.LocalTime;
 public class Change implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (args.length < 4) {
-            throw new InvalidCommandArgumentsException("Error. Use change <date> <starttime> <option> <newvalue>");
-        }
-
         LocalDate targetDate = LocalDate.parse(args[0]);
         LocalTime targetStartTime = LocalTime.parse(args[1]);
         ChangeOption option = ChangeOption.fromString(args[2].trim());
@@ -36,7 +32,7 @@ public class Change implements Command {
             throw new IllegalArgumentException("Event is null.");
         }
 
-        LocalDate newDate = oldEvent.getDate();
+        LocalDate newDate = targetDate;
         LocalTime newStartTime = oldEvent.getStartTime();
         LocalTime newEndTime = oldEvent.getEndTime();
         String newName = oldEvent.getName();
@@ -53,21 +49,27 @@ public class Change implements Command {
         }
 
         // Изтриваме старото събитие
-        context.getCurentCalendar().deleteEvent(oldEvent.getDate(), oldEvent.getStartTime(), oldEvent.getEndTime());
+        context.getCurentCalendar().deleteEvent(targetDate, oldEvent.getStartTime(), oldEvent.getEndTime());
 
         try {
             // Опитваме се да създадем и добавим новото събитие
             TimeInterval updatedTimeInterval = new TimeInterval(newStartTime, newEndTime);
-            Event updatedEvent = new Event(newDate, updatedTimeInterval, newName, newNote);
-            context.getCurentCalendar().addEvent(updatedEvent);
+            Event updatedEvent = new Event(updatedTimeInterval, newName, newNote);
+            context.getCurentCalendar().addEvent(newDate, updatedEvent);
 
             context.setHasUnsavedChanges(true);
-            return "Successfully changed Event " + updatedEvent.toString();
+            return "Successfully changed Event on " + newDate + " " + updatedEvent.toString();
 
         } catch (Exception e) {
             // Ако гръмне грешка, връщаме старото събитие обратно!
-            context.getCurentCalendar().addEvent(oldEvent);
+            context.getCurentCalendar().addEvent(targetDate, oldEvent);
             throw new IllegalArgumentException("Change failed: " + e.getMessage());
         }
     }
+
+    @Override
+    public int getRequiredArgsCount() {
+        return 4;
+    }
+
 }

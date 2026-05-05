@@ -1,4 +1,4 @@
-package calendar.fileManeger;
+package calendar.file_manager;
 
 import calendar.model.Calendar;
 

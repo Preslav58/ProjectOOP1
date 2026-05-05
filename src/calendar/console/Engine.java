@@ -1,8 +1,10 @@
 package calendar.console;
 
-import calendar.console.comand.Command;
-import calendar.console.comand.CommandFactory;
+import calendar.console.command.Command;
+import calendar.console.command.CommandFactory;
 import calendar.exception.FileNotOpenedException;
+import calendar.exception.InvalidCommandArgumentsException;
+
 import java.util.Scanner;
 
 /**
@@ -75,6 +77,11 @@ public class Engine {
                 // Проверка дали е отворен файл при нужда
                 if (command.requiresOpenedFile() && !context.isFileOpen()) {
                     throw new FileNotOpenedException();
+                }
+
+                // Проверка за брой аргументи
+                if (args.length < command.getRequiredArgsCount()) {
+                    throw new InvalidCommandArgumentsException("Error. Not enough arguments.");
                 }
 
                 // Изпълнение на командата

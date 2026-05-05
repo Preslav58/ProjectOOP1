@@ -1,7 +1,7 @@
-package calendar.console.comand.complexCommands;
+package calendar.console.command.complex_commands;
 
 import calendar.console.Context;
-import calendar.console.comand.Command;
+import calendar.console.command.Command;
 import calendar.exception.InvalidCommandArgumentsException;
 
 import java.time.LocalDate;
@@ -15,10 +15,6 @@ import java.time.LocalTime;
 public class UnBook implements Command {
     @Override
     public String execute(String[] args, Context context) throws Exception {
-        if (args.length != 3) {
-            throw new InvalidCommandArgumentsException("Error. Wrong number of arguments. Please use unbook <date> <starttime> <endtime>");
-        }
-
         LocalDate date = LocalDate.parse(args[0]);
         LocalTime startTime = LocalTime.parse(args[1]);
         LocalTime endTime = LocalTime.parse(args[2]);
@@ -32,4 +28,10 @@ public class UnBook implements Command {
             return "Event on this date or hour hasn't been found";
         }
     }
+
+    @Override
+    public int getRequiredArgsCount() {
+        return 3;
+    }
+
 }

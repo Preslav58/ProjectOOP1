@@ -1,6 +1,7 @@
-package calendar.fileManeger;
+package calendar.file_manager;
 
 import calendar.model.Calendar;
+import calendar.model.Day;
 import calendar.model.Event;
 import calendar.model.TimeInterval;
 
@@ -34,17 +35,20 @@ public class TextStorage implements FileManeger {
     @Override
     public void save(Calendar calendar, String fileName) throws Exception{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            for (Event event : calendar.getEvents()) {
-                String notes = event.getNotes().isEmpty() ? " " : event.getNotes();
+            for (Day day : calendar.getDays()) {
 
-                String line = String.join(DELIMITER_CHAR, "EVENT",
-                        event.getDate().toString(),
-                        event.getStartTime().toString(),
-                        event.getEndTime().toString(),
-                        event.getName(), notes);
+                for (Event event : day.getEvents()) {
+                    String notes = event.getNotes().isEmpty() ? " " : event.getNotes();
 
-                writer.write(line);
-                writer.newLine();
+                    String line = String.join(DELIMITER_CHAR, "EVENT",
+                            day.getDate().toString(),
+                            event.getStartTime().toString(),
+                            event.getEndTime().toString(),
+                            event.getName(), notes);
+
+                    writer.write(line);
+                    writer.newLine();
+                }
             }
 
             for (LocalDate holiday : calendar.getHolidays()) {
@@ -96,7 +100,7 @@ public class TextStorage implements FileManeger {
                     }
 
                     TimeInterval timeInterval = new TimeInterval(startTime, endTime);
-                    calendar.addEvent(new Event(date, timeInterval, name, notes));
+                    calendar.addEvent(date, new Event(timeInterval, name, notes));
 
                 } else if ("HOLIDAY".equals(type)) {
                     LocalDate date = LocalDate.parse(fields[1]);
