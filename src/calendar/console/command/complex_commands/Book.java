@@ -16,6 +16,14 @@ import java.time.LocalTime;
  * (overlap) с вече съществуващи ангажименти в рамките на съответния ден.
  */
 public class Book implements Command {
+    /**
+     * Изпълнява логиката по създаване и запазване на ново събитие.
+     *
+     * @param args    масив от аргументи (дата, начален час, краен час, име, бележка)
+     * @param context текущият контекст
+     * @return съобщение за успешно добавяне
+     * @throws Exception ако има застъпване на часовете
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         LocalDate date = LocalDate.parse(args[0]);
@@ -37,9 +45,12 @@ public class Book implements Command {
         context.getCurentCalendar().addEvent(date, newEvent);
         context.setHasUnsavedChanges(true);
 
-        return "Successfully booked hour for: " + newEvent.toString();
+        return String.format("Successfully booked hour for: [%s] %s", date, newEvent.toString());
     }
 
+    /**
+     * @return {@code false}, тъй като командата има нужда от 4 или повече параметри
+     */
     @Override
     public int getRequiredArgsCount() {
         return 4;

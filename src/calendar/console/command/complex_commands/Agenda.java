@@ -15,6 +15,14 @@ import java.util.List;
  * което гарантира, че те вече са подредени в хронологичен ред.
  */
 public class Agenda implements Command {
+    /**
+     * Извлича и форматира всички събития за подадената дата.
+     *
+     * @param args    масив от аргументи (очаква се 1 аргумент - дата)
+     * @param context текущият контекст на приложението
+     * @return списък със събитията за деня или съобщение, че няма такива
+     * @throws Exception при невалиден формат на датата
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         LocalDate date = LocalDate.parse(args[0]);
@@ -35,6 +43,9 @@ public class Agenda implements Command {
         return builder.toString().trim();
     }
 
+    /**
+     * @return {@code false}, тъй като командата има нужда от един или повече параметри
+     */
     @Override
     public int getRequiredArgsCount() {
         return 1;

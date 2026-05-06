@@ -11,6 +11,14 @@ import java.util.Arrays;
  * Зарежда графика на колега от друг файл и търси време, в което и двамата са свободни.
  */
 public class FindSlotWith extends BaseFindSlot {
+    /**
+     * Търси общ свободен времеви прозорец между текущия и един външен календар.
+     *
+     * @param args    масив от аргументи (очаква 3 аргумента - начална дата, продължителност и име на външен файл)
+     * @param context текущият контекст на приложението
+     * @return текстово съобщение с намерените дата и час или съобщение за неуспех
+     * @throws Exception при невалидни параметри или грешка при четене на външния файл
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         LocalDate searchDate = LocalDate.parse(args[0]);
@@ -26,6 +34,9 @@ public class FindSlotWith extends BaseFindSlot {
         return findCommonSlot(searchDate, hours, Arrays.asList(context.getCurentCalendar(), secondCalendar));
     }
 
+    /**
+     * @return {@code false}, тъй като командата има нужда от 3 или повече параметри
+     */
     @Override
     public int getRequiredArgsCount() {
         return 3;

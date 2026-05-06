@@ -8,6 +8,14 @@ import calendar.console.command.Command;
  * Записва всички промени обратно във файла, от който е зареден календарът.
  */
 public class Save implements Command {
+    /**
+     * Изпълнява логиката по запазване на календара в текущия файл.
+     *
+     * @param args    масив от аргументи (не се очакват аргументи за тази команда)
+     * @param context текущият контекст на приложението
+     * @return съобщение за успешно запазване
+     * @throws Exception при проблем с писането във файла
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         String file = context.getFileName();

@@ -19,6 +19,14 @@ import java.util.Scanner;
  * (запазване, изтриване или ръчно преместване).
  */
 public class Merge implements Command {
+    /**
+     * Изпълнява логиката по обединяване на два календара.
+     *
+     * @param args    име на външния файл
+     * @param context текущият контекст
+     * @return статистика за броя добавени събития
+     * @throws Exception при невалиден файл
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         String externalFileName = args[0];
@@ -119,6 +127,9 @@ public class Merge implements Command {
         return null;
     }
 
+    /**
+     * @return {@code false}, тъй като командата има нужда от един или повече параметри
+     */
     @Override
     public int getRequiredArgsCount() {
         return 1;

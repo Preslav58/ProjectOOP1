@@ -12,6 +12,14 @@ import java.time.LocalDate;
  * и променя неговия статус. Празниците се вземат предвид при търсенето на свободни слотове.
  */
 public class Holiday implements Command {
+    /**
+     * Отбелязва подадената дата като неработен (почивен) ден.
+     *
+     * @param args    масив от аргументи (очаква се 1 аргумент - дата)
+     * @param context текущият контекст на приложението
+     * @return съобщение за успешно добавяне на празник
+     * @throws Exception при невалиден формат на датата
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         LocalDate date = LocalDate.parse(args[0]);
@@ -22,6 +30,9 @@ public class Holiday implements Command {
         return date.toString() + " successfully marked as a holiday.";
     }
 
+    /**
+     * @return {@code false}, тъй като командата има нужда от един или повече параметри
+     */
     @Override
     public int getRequiredArgsCount() {
         return 1;

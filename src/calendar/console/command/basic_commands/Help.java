@@ -8,11 +8,22 @@ import calendar.console.command.Command;
  * Показва на екрана списък с всички поддържани команди и техния синтаксис.
  */
 public class Help implements Command {
+    /**
+     * @return {@code false}, тъй като командата отваря файл и не изисква такъв да е вече отворен
+     */
     @Override
     public boolean requiresOpenedFile() {
         return false;
     }
 
+    /**
+     * Извежда списък с всички налични команди и тяхното описание.
+     *
+     * @param args    масив от аргументи (не се очакват аргументи за тази команда)
+     * @param context текущият контекст на приложението
+     * @return форматиран текст с помощна информация
+     * @throws Exception ако възникне непредвидена грешка
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         return """

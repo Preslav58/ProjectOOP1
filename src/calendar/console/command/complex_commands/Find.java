@@ -12,11 +12,19 @@ import calendar.model.Event;
  * или бележки, без да прави разлика между малки и главни букви (case-insensitive).
  */
 public class Find implements Command {
+    /**
+     * Търси по ключова дума във всички събития.
+     *
+     * @param args    очаква се 1 аргумент (дума или израз за търсене)
+     * @param context текущият контекст
+     * @return списък с намерените събития или съобщение, че няма такива
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         String keyword = String.join(" ", args).toLowerCase();
 
         StringBuilder builder = new StringBuilder();
+
         for(Day day : context.getCurentCalendar().getDays()){
             for(Event event : day.getEvents()) {
                 String name = event.getName().toLowerCase();
@@ -32,9 +40,12 @@ public class Find implements Command {
             return "No events found";
         }
 
-        return builder.toString();
+        return builder.toString().trim();
     }
 
+    /**
+     * @return {@code false}, тъй като командата има нужда от един или повече параметри
+     */
     @Override
     public int getRequiredArgsCount() {
         return 1;

@@ -13,6 +13,14 @@ import java.time.LocalTime;
  * на обекта {@code Calendar}, който от своя страна го премахва от съответния ден.
  */
 public class UnBook implements Command {
+    /**
+     * Намира и изтрива събитие по подадени дата и часове.
+     *
+     * @param args    масив от аргументи (очаква 3 аргумента - дата, начален и краен час)
+     * @param context текущият контекст на приложението
+     * @return съобщение за успешно изтриване или за ненамерено събитие
+     * @throws Exception при невалиден формат на времевите параметри
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         LocalDate date = LocalDate.parse(args[0]);
@@ -29,6 +37,9 @@ public class UnBook implements Command {
         }
     }
 
+    /**
+     * @return {@code false}, тъй като командата има нужда от 3 или повече параметри
+     */
     @Override
     public int getRequiredArgsCount() {
         return 3;

@@ -15,6 +15,14 @@ import java.time.LocalTime;
  * (напр. конфликт с друго събитие), възстановява оригиналните данни.
  */
 public class Change implements Command {
+    /**
+     * Изпълнява логиката по промяна на събитие.
+     *
+     * @param args    очаква 4 аргумента (дата, час, опция за промяна, нова стойност)
+     * @param context текущият контекст
+     * @return съобщение за успех
+     * @throws Exception при грешка или възникнал времеви конфликт
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         LocalDate targetDate = LocalDate.parse(args[0]);
@@ -67,6 +75,9 @@ public class Change implements Command {
         }
     }
 
+    /**
+     * @return {@code false}, тъй като командата има нужда от 4 или повече параметри
+     */
     @Override
     public int getRequiredArgsCount() {
         return 4;

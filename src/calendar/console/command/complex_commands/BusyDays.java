@@ -20,6 +20,14 @@ import java.util.Map;
  * спрямо общия брой заети часове.
  */
 public class BusyDays implements Command {
+    /**
+     * Изчислява натовареността за зададения период и генерира статистика.
+     *
+     * @param args    масив от аргументи (очаква 2 аргумента - начална и крайна дата)
+     * @param context текущият контекст на приложението
+     * @return сортиран списък с дните и общите заети часове/минути
+     * @throws Exception при невалидни дати или ако крайната е преди началната
+     */
     @Override
     public String execute(String[] args, Context context) throws Exception {
         LocalDate from = LocalDate.parse(args[0]);
@@ -68,6 +76,9 @@ public class BusyDays implements Command {
         return result.toString().trim();
     }
 
+    /**
+     * @return {@code false}, тъй като командата има нужда от 2 или повече параметри
+     */
     @Override
     public int getRequiredArgsCount() {
         return 2;
